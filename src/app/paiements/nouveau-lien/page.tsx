@@ -173,76 +173,79 @@ export default function NouveauLienPage() {
 				</CardContent>
 			</Card>
 
-			{paymentLinks.map((item) => (
-				<Card
-					key={item.id}
-					className={`mt-6 transition-colors duration-1000 ${
-						item.isNew ? "bg-yellow-100 dark:bg-yellow-900/30" : ""
-					}`}
-				>
-					{item.result.success ? (
-						<>
-							<CardHeader>
-								<CardTitle className="text-green-600">Lien créé avec succès</CardTitle>
-							</CardHeader>
-							<CardContent className="space-y-4">
-								<div>
-									<p className="text-sm font-medium text-muted-foreground mb-1">Lien de paiement</p>
-									<div className="flex items-center gap-2">
-										<Input value={item.result.url} readOnly className="font-mono text-sm" />
-										<Button
-											variant="outline"
-											size="icon"
-											onClick={() => copyToClipboard(item.result.url)}
-											title="Copier le lien"
-										>
-											<Copy className="h-4 w-4" />
-										</Button>
-										<Button
-											variant="outline"
-											size="icon"
-											asChild
-											title="Ouvrir le lien"
-										>
-											<a href={item.result.url} target="_blank" rel="noopener noreferrer">
-												<ExternalLink className="h-4 w-4" />
-											</a>
-										</Button>
-									</div>
-								</div>
-
-								<div className="grid grid-cols-2 gap-4 pt-2 border-t">
+			{paymentLinks.map((item) => {
+				const result = item.result
+				return (
+					<Card
+						key={item.id}
+						className={`mt-6 transition-colors duration-1000 ${
+							item.isNew ? "bg-yellow-100 dark:bg-yellow-900/30" : ""
+						}`}
+					>
+						{result.success ? (
+							<>
+								<CardHeader>
+									<CardTitle className="text-green-600">Lien créé avec succès</CardTitle>
+								</CardHeader>
+								<CardContent className="space-y-4">
 									<div>
-										<p className="text-sm font-medium text-muted-foreground">Montant</p>
-										<p className="text-lg font-semibold">{item.result.amount.toFixed(2)} EUR</p>
+										<p className="text-sm font-medium text-muted-foreground mb-1">Lien de paiement</p>
+										<div className="flex items-center gap-2">
+											<Input value={result.url} readOnly className="font-mono text-sm" />
+											<Button
+												variant="outline"
+												size="icon"
+												onClick={() => copyToClipboard(result.url)}
+												title="Copier le lien"
+											>
+												<Copy className="h-4 w-4" />
+											</Button>
+											<Button
+												variant="outline"
+												size="icon"
+												asChild
+												title="Ouvrir le lien"
+											>
+												<a href={result.url} target="_blank" rel="noopener noreferrer">
+													<ExternalLink className="h-4 w-4" />
+												</a>
+											</Button>
+										</div>
 									</div>
-									{item.result.email && (
+
+									<div className="grid grid-cols-2 gap-4 pt-2 border-t">
 										<div>
-											<p className="text-sm font-medium text-muted-foreground">Email</p>
-											<p className="text-sm">{item.result.email}</p>
+											<p className="text-sm font-medium text-muted-foreground">Montant</p>
+											<p className="text-lg font-semibold">{result.amount.toFixed(2)} EUR</p>
 										</div>
-									)}
-									{item.result.description && (
-										<div className="col-span-2">
-											<p className="text-sm font-medium text-muted-foreground">Description</p>
-											<p className="text-sm">{item.result.description}</p>
-										</div>
-									)}
-								</div>
-							</CardContent>
-						</>
-					) : (
-						<>
-							<CardHeader>
-								<CardTitle className="text-red-600">Erreur</CardTitle>
-							</CardHeader>
-							<CardContent>
-								<p className="text-sm text-red-600">{item.result.error}</p>
-							</CardContent>
-						</>
-					)}
-				</Card>
-			))}
+										{result.email && (
+											<div>
+												<p className="text-sm font-medium text-muted-foreground">Email</p>
+												<p className="text-sm">{result.email}</p>
+											</div>
+										)}
+										{result.description && (
+											<div className="col-span-2">
+												<p className="text-sm font-medium text-muted-foreground">Description</p>
+												<p className="text-sm">{result.description}</p>
+											</div>
+										)}
+									</div>
+								</CardContent>
+							</>
+						) : (
+							<>
+								<CardHeader>
+									<CardTitle className="text-red-600">Erreur</CardTitle>
+								</CardHeader>
+								<CardContent>
+									<p className="text-sm text-red-600">{result.error}</p>
+								</CardContent>
+							</>
+						)}
+					</Card>
+				)
+			})}
 		</div>
 	)
 }
