@@ -1,6 +1,6 @@
 "use client"
 
-import { ChevronRight, CreditCard, LinkIcon } from "lucide-react"
+import { ChevronRight, CreditCard, LinkIcon, LogOut } from "lucide-react"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
 
@@ -12,6 +12,7 @@ import {
 import {
   Sidebar,
   SidebarContent,
+  SidebarFooter,
   SidebarGroup,
   SidebarHeader,
   SidebarMenu,
@@ -21,6 +22,7 @@ import {
   SidebarMenuSubButton,
   SidebarMenuSubItem,
 } from "@/components/ui/sidebar"
+import { logout } from "@/app/(app)/actions"
 
 const navigationItems = [
   {
@@ -79,6 +81,18 @@ export function AppSidebar() {
           </SidebarMenu>
         </SidebarGroup>
       </SidebarContent>
+      <SidebarFooter>
+        <SidebarMenu>
+          <SidebarMenuItem>
+            <form action={logout}>
+              <SidebarMenuButton type="submit" tooltip="Déconnexion">
+                <LogOut />
+                <span>Déconnexion</span>
+              </SidebarMenuButton>
+            </form>
+          </SidebarMenuItem>
+        </SidebarMenu>
+      </SidebarFooter>
     </Sidebar>
   )
 }
